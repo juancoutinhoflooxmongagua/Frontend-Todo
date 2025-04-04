@@ -4,6 +4,11 @@ import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
 export default class Todo extends Component {
+
+    constructor(props){
+        super()
+        this.handleAdd = this.handleAdd.bind(this)
+    }
     state = {
         description: ''
     }
