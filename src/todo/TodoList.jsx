@@ -6,16 +6,32 @@ const TodoList = props => {
   const renderRows = () => {
     return props.list.map(todo => (
       <tr key={todo._id}>
-        <td>{todo.desc}</td>
+        <td className={todo.done ? 'text-decoration-line-through text-muted' : ''}>
+          {todo.desc}
+        </td>
         <td>
-          <button className="btn btn-warning m-1">
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
-          <button className="btn btn-danger m-1">
+          <span className={`badge ${todo.done ? 'bg-success' : 'bg-warning'} me-2`}>
+            {todo.done ? 'Concluída' : 'Pendente'}
+          </span>
+          {!todo.done && (
+            <button 
+              onClick={() => props.handleMarkAsDone(todo)} 
+              className="btn btn-success btn-sm m-1"
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </button>
+          )}
+          <button 
+            onClick={() => props.handleRemove(todo)} 
+            className="btn btn-danger btn-sm m-1"
+          >
             <FontAwesomeIcon icon={faTrash} />
           </button>
-          <button className="btn btn-success m-1">
-            <FontAwesomeIcon icon={faCheck} />
+          <button 
+            onClick={() => props.handleEdit(todo)} 
+            className="btn btn-warning btn-sm m-1"
+          >
+            <FontAwesomeIcon icon={faEdit} />
           </button>
         </td>
       </tr>

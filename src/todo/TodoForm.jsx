@@ -1,24 +1,39 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faSearch, faClose } from '@fortawesome/free-solid-svg-icons';
 
-const TodoForm = props => (
-    <div role='form' className='row my-3'>
-        <div className="col-9">
-            <input 
-                type="text" 
-                id='desc' 
-                placeholder='Adicionar tarefa...' 
-                className="form-control"
-                value={props.desc}
-                onChange={props.handleChange}
-            /> 
-        </div>
+export default props => {
+  const keyHandler = (e) => {
+    if (e.key === 'Enter') {
+      e.shiftKey ? props.handleSearch() : props.handleAdd();
+    } else if (e.key === 'Escape') {
+      props.handleClear();
+    }
+  }
 
-        <div className="col-3 d-flex justify-content-end">
-            <button onClick={props.handleAdd} className="btn btn-primary">
-                <i className="fa fa-plus"></i> Adicionar
-            </button>
-        </div>
+  return (
+    <div role="form" className="row g-2">
+      <div className="col-9">
+        <input 
+          id="desc" 
+          className="form-control"
+          placeholder="Adicione uma tarefa"
+          onChange={props.handleChange}
+          onKeyUp={keyHandler}
+          value={props.desc}
+        />
+      </div>
+      <div className="col-auto">
+        <button className="btn btn-primary" onClick={props.handleAdd}>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+        <button className="btn btn-info ms-1" onClick={props.handleSearch}>
+          <FontAwesomeIcon icon={faSearch} />
+        </button>
+        <button className="btn btn-secondary ms-1" onClick={props.handleClear}>
+          <FontAwesomeIcon icon={faClose} />
+        </button>
+      </div>
     </div>
-)
-
-export default TodoForm;
+  );
+}
