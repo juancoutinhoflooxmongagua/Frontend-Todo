@@ -4,7 +4,9 @@ import 'font-awesome/css/font-awesome.min.css'
 import React from 'react'
 
 export default _props => {
-    <div className='container'>
-        <h1>App</h1>
-    </div>
+    return (
+        <div className='container'>
+            <h1>App</h1>
+        </div>
+    );
 }
