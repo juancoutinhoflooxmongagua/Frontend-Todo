@@ -1,14 +1,15 @@
-import React from 'react'
+import React from 'react';
 
 const TodoForm = props => (
     <div role='form' className='row my-3'>
-      
         <div className="col-9">
             <input 
                 type="text" 
                 id='desc' 
                 placeholder='Adicionar tarefa...' 
                 className="form-control"
+                value={props.description}
+                onChange={props.handleChange}
             /> 
         </div>
 
@@ -20,4 +21,4 @@ const TodoForm = props => (
     </div>
 )
 
-export default TodoForm
+export default TodoForm;
