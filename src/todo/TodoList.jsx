@@ -5,6 +5,8 @@ const TodoList = props => {
     return props.list.map(todo => (
       <tr key={todo._id}>
         <td>{todo.desc}</td>
+        <button>Editar</button>
+        <button>Excluir</button>
       </tr>
     ))
   }
