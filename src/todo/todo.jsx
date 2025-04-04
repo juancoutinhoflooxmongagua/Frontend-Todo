@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import axios from 'axios'
 import PageHeader from "../template/pageHeader";
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+
+const URL = 'http://localhost:3003/api/todos'
 export default class Todo extends Component {
 
     constructor(props){
@@ -19,8 +22,10 @@ export default class Todo extends Component {
     }
 
     handleAdd() {
-        console.log('Tarefa adicionada:', this.state.desc);
+        axios.post(URL, { desc: this.state.desc })
+        this.setState({ desc: '' })
     }
+    
 
     render() {
         return (
