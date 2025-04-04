@@ -5,16 +5,21 @@ import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
 const URL = 'http://localhost:3003/api/todos'
+
 export default class Todo extends Component {
 
     constructor(props){
         super(props)
+        this.state = {
+            desc: '',
+            list: []
+        }
+
         this.handleAdd = this.handleAdd.bind(this)
         this.handleChange = this.handleChange.bind(this)
-    }
-
-    state = {
-        desc: ''
+        this.handleRemove = this.handleRemove.bind(this)
+        this.handleSearch = this.handleSearch.bind(this)
+        this.refresh()
     }
 
     handleChange(e) {
@@ -22,10 +27,25 @@ export default class Todo extends Component {
     }
 
     handleAdd() {
-        axios.post(URL, { desc: this.state.desc })
-        this.setState({ desc: '' })
+        const desc = this.state.desc
+        axios.post(URL, { desc })
+            .then(() => this.refresh())
     }
-    
+
+    handleRemove(todo) {
+        axios.delete(`${URL}/${todo._id}`)
+            .then(() => this.refresh())
+    }
+
+    handleSearch() {
+        this.refresh(this.state.desc)
+    }
+
+    refresh(desc = '') {
+        const search = desc ? `&desc__regex=/${desc}/` : ''
+        axios.get(`${URL}?sort=-createdAt${search}`)
+            .then(resp => this.setState({ ...this.state, desc, list: resp.data }))
+    }
 
     render() {
         return (
@@ -35,8 +55,12 @@ export default class Todo extends Component {
                     desc={this.state.desc}
                     handleChange={this.handleChange}
                     handleAdd={this.handleAdd}
+                    handleSearch={this.handleSearch}
                 />
-                <TodoList />
+                <TodoList 
+                    list={this.state.list}
+                    handleRemove={this.handleRemove}
+                />
             </div>
         );
     }
