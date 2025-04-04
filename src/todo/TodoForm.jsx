@@ -8,7 +8,7 @@ const TodoForm = props => (
                 id='desc' 
                 placeholder='Adicionar tarefa...' 
                 className="form-control"
-                value={props.description}
+                value={props.desc}
                 onChange={props.handleChange}
             /> 
         </div>
